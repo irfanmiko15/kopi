@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kopi/dosen/utsdosen.dart';
 
 class PesanMasuk extends StatefulWidget {
   @override
@@ -28,7 +29,8 @@ class _PesanMasukState extends State<PesanMasuk> {
                 'assets/image/telponbig.png',
                 height: 200,
               ),
-              Padding(
+              InkWell(
+              child: Padding(
                   padding: EdgeInsets.only( right: 25, left: 25),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -62,6 +64,10 @@ class _PesanMasukState extends State<PesanMasuk> {
                         ))
                     ],),
                   )),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx)=>UTSDosen()));
+                  },
+                  ),
                    Padding(
                   padding: EdgeInsets.only(top:25, right: 25, left: 25),
                   child: Container(
