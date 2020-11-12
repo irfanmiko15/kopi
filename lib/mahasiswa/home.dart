@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:kopi/dosen/pesanmasuk.dart';
+import 'package:kopi/constant.dart';
+import 'package:kopi/mahasiswa/jadwal.dart';
+import 'package:kopi/mahasiswa/keluhan.dart';
+import 'package:kopi/mahasiswa/komunikasi.dart';
 
-void main() {
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomeDosen()));
-}
-
-class HomeDosen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _HomeDosenState createState() => _HomeDosenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeDosenState extends State<HomeDosen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
         appBar: AppBar(
           elevation: 0,
           toolbarHeight: 60,
@@ -97,71 +96,81 @@ class _HomeDosenState extends State<HomeDosen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children:[
                           Image.asset('assets/image/telfon.png'),
-                          Text("Pesan Masuk",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
+                          Text("Komunikasi",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
                           ]
                           ),
                         ),
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (ctx)=>PesanMasuk()));
+                          Navigator.push(context, MaterialPageRoute(builder: (ctx)=>KomunikasiScreen()));
                         },
                         ),
                         SizedBox(width: 10,),
-                        Container(
-                          width: MediaQuery.of(context).size.width*0.38,
-                          height: MediaQuery.of(context).size.width*0.38,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(35),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF1D6297).withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 4,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                        InkWell(
+                                                  child: Container(
+                            width: MediaQuery.of(context).size.width*0.38,
+                            height: MediaQuery.of(context).size.width*0.38,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(35),
                               ),
-                            ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF1D6297).withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset:
+                                      Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children:[
+                            Image.asset('assets/image/iconkeluhan.png'),
+                            Text("Keluhan",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
+                            ]
+                            ),
                           ),
-                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:[
-                          Image.asset('assets/image/iconkeluhan.png'),
-                          Text("Keluhan",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
-                          ]
-                          ),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (ctx)=>KeluhanScreen()));
+                          },
                         )
                       ],
                     ),
                       SizedBox(height: 20,),
-                        Container(
-                          width: MediaQuery.of(context).size.width*0.38,
-                          height: MediaQuery.of(context).size.width*0.38,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(35),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF1D6297).withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 4,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                        InkWell(
+                                                  child: Container(
+                            width: MediaQuery.of(context).size.width*0.38,
+                            height: MediaQuery.of(context).size.width*0.38,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(35),
                               ),
-                            ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF1D6297).withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset:
+                                      Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children:[
+                            Image.asset('assets/image/icontanggal.png'),
+                            Text("Jadwal",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
+                            ]
+                            ),
                           ),
-                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:[
-                          Image.asset('assets/image/icontanggal.png'),
-                          Text("Jadwal",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
-                          ]
-                          ),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (ctx)=>JadwalScreen()));
+                          },
                         )
                   ]),
                 )
