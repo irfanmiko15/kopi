@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/dosen/tanggal.dart';
-
+import 'package:kopi/constant.dart';
 class UTSDosen extends StatefulWidget {
   @override
   _UTSDosenState createState() => _UTSDosenState();
@@ -13,27 +13,32 @@ class _UTSDosenState extends State<UTSDosen> {
         id: 'DW1',
         title: 'Tanggal',
         gambar: 'assets/image/tanggalblue.png',
-        widget: Tanggal()),
+        widget: Tanggal('Tanggal')),
     UTS(
         id: 'DW2',
         title: 'Peraturan',
         gambar: 'assets/image/tanggalblue.png',
-        widget: Tanggal()),
+        widget: Tanggal('Peraturan')),
     UTS(
         id: 'DW3',
         title: 'Pengumpulan',
         gambar: 'assets/image/pengumpulanblue.png',
-        widget: Tanggal()),
+        widget: Tanggal('Pengumpulan')),
     UTS(
         id: 'DW4',
         title: 'Pendampingan',
         gambar: 'assets/image/pendampingblue.png',
-        widget: Tanggal()),
+        widget: Tanggal('Pendampingan')),
     UTS(
-        id: 'DW35',
+        id: 'DW5',
         title: 'Nilai',
         gambar: 'assets/image/nilaiblue.png',
-        widget: Tanggal()),
+        widget: Tanggal('Nilai')),
+     UTS(
+        id: 'DW6',
+        title: 'Perbaikan Nilai',
+        gambar: 'assets/image/perbaikannilai.png',
+        widget: Tanggal('Perbaikan Nilai')),
   ];
   @override
   Widget build(BuildContext context) {
@@ -42,9 +47,11 @@ class _UTSDosenState extends State<UTSDosen> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          title: Center(
-              child: Text('Ujian Tengah Semester',
-                  style: TextStyle(fontFamily: 'Gothic'))),
+          title: 
+              Text('Ujian Tengah Semester',
+                  style: TextStyle(fontFamily: 'Gothic')),
+                  centerTitle: true,
+
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -135,3 +142,4 @@ class UTS {
     @required this.widget,
   });
 }
+

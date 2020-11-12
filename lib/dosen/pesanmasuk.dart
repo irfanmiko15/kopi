@@ -14,8 +14,8 @@ class _PesanMasukState extends State<PesanMasuk> {
         elevation: 0,
         toolbarHeight: 60,
         backgroundColor: Color(0xFF4DA8E0),
-        title: Center(
-            child: Text('Pesan Masuk', style: TextStyle(fontFamily: 'Gothic'))),
+        title:  Text('Pesan Masuk', style: TextStyle(fontFamily: 'Gothic')),
+        centerTitle: true,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

@@ -89,7 +89,6 @@ class _HomeDosenState extends State<HomeDosen> {
                                   Offset(0, 3), // changes position of shadow
                             ),
                           ],
-                          
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
