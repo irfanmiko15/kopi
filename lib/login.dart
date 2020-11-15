@@ -1,7 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kopi/constant.dart';
 import 'package:kopi/dosen/homedosen.dart';
+import 'package:flutter/rendering.dart';
 import 'package:kopi/mahasiswa/home.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,6 +15,62 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
+   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      new FlutterLocalNotificationsPlugin();
+  coba()async{
+      firebaseMessaging.getToken().then((token) async {
+       var pushtoken = token.toString();
+        firebaseMessaging.requestNotificationPermissions();
+    firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
+      print('onMessage: $message');
+      showNotification(message['notification']);
+      return;
+    }, onResume: (Map<String, dynamic> message) {
+      print('onResume: $message');
+      showNotification(message['notification']);
+      return;
+    }, onLaunch: (Map<String, dynamic> message) {
+      print('onLaunch: $message');
+      showNotification(message['notification']);
+      return;
+    });
+      print("coba");
+      print("coba: $pushtoken");
+      });
+  }
+   void configLocalNotification() async {
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('ic_launcher');
+    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+   void showNotification(message) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+      Platform.isAndroid ? 'com.komunikasi.kopi' : 'com.komunikasi.kopi',
+      'Kopi',
+      'your channel description',
+      playSound: true,
+      enableVibration: true,
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
+        message['body'].toString(), platformChannelSpecifics,
+        payload: json.encode(message));
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    coba();
+    configLocalNotification();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

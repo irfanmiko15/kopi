@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kopi/mahasiswa/uasmahasiswa.dart';
 import 'package:kopi/mahasiswa/utsmahasiswa.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class KomunikasiScreen extends StatefulWidget {
   @override
@@ -8,6 +10,22 @@ class KomunikasiScreen extends StatefulWidget {
 }
 
 class _KomunikasiScreenState extends State<KomunikasiScreen> {
+  AudioCache _audioUTS,_audioUAS;
+  void widgetUTS(){
+    _audioUTS.play('UjianTengahSemester.mp3');
+     Navigator.push(context, MaterialPageRoute(builder: (ctx)=>UTSMahasiswa()));
+  }
+  void widgetUAS(){
+    _audioUAS.play('UjianAkhirSemester.mp3');
+     Navigator.push(context, MaterialPageRoute(builder: (ctx)=>UASMahasiswa()));
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioUTS = AudioCache(prefix:"audio/", fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+    _audioUAS = AudioCache(prefix:"audio/", fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+  } 
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -69,7 +87,7 @@ class _KomunikasiScreenState extends State<KomunikasiScreen> {
                     ],),
                   )),
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (ctx)=>UTSMahasiswa()));
+                   widgetUTS();
                   },
                   ),
                    InkWell(
@@ -108,7 +126,7 @@ class _KomunikasiScreenState extends State<KomunikasiScreen> {
                       ],),
                   )),
                   onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (ctx)=>UASMahasiswa()));
+                   widgetUAS();
                   }
                    )
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/constant.dart';
 import 'package:kopi/dosen/tanggal.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class UTSMahasiswa extends StatefulWidget {
   @override
@@ -9,34 +11,9 @@ class UTSMahasiswa extends StatefulWidget {
 }
 
 class _UTSMahasiswaState extends State<UTSMahasiswa> {
-  // final List<UTS> uts = [
-  //   UTS(
-  //       id: 'DW1',
-  //       title: 'Tanggal',
-  //       gambar: 'assets/image/tanggalblue.png',
-  //       widget: Tanggal()),
-  //   UTS(
-  //       id: 'DW2',
-  //       title: 'Peraturan',
-  //       gambar: 'assets/image/tanggalblue.png',
-  //       widget: Tanggal()),
-  //   UTS(
-  //       id: 'DW3',
-  //       title: 'Pengumpulan',
-  //       gambar: 'assets/image/pengumpulanblue.png',
-  //       widget: Tanggal()),
-  //   UTS(
-  //       id: 'DW4',
-  //       title: 'Pendampingan',
-  //       gambar: 'assets/image/pendampingblue.png',
-  //       widget: Tanggal()),
-  //   UTS(
-  //       id: 'DW35',
-  //       title: 'Nilai',
-  //       gambar: 'assets/image/nilaiblue.png',
-  //       widget: Tanggal()),
-  // ];
-  _showmodal(context) {
+  AudioCache _audioCache;
+  void modalNilai(context) {
+    _audioCache.play('nilai.mp3');
     setState(() {
       showDialog(
         context: context,
@@ -47,6 +24,60 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
     });
   }
 
+  void modalPendampingan(context) {
+    _audioCache.play('Pendamping.mp3');
+     setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal();
+        },
+      );
+    });
+  }
+
+  void modalPengumpulan(context){
+    _audioCache.play('Pengumpulan.mp3');
+   setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal();
+        },
+      );
+    });
+  }
+  void modalPengaturan(context){
+    _audioCache.play('Peraturan.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal();
+        },
+      );
+    });
+  }
+  void modalTanggal(context){
+    _audioCache.play('Tanggal.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal();
+        },
+      );
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioCache = AudioCache(
+        prefix: "audio/",
+        fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+  }
+
   @override
   Widget build(BuildContext context) {
     String dosen;
@@ -55,9 +86,9 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          title:  Text('Ujian Tengah Semester',
-                  style: TextStyle(fontFamily: 'Gothic')),
-                  centerTitle: true,
+          title: Text('Ujian Tengah Semester',
+              style: TextStyle(fontFamily: 'Gothic')),
+          centerTitle: true,
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -118,10 +149,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                       modalTanggal(context);
                       },
                     ),
                     InkWell(
@@ -163,10 +191,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                       modalPengaturan(context);
                       },
                     ),
                     InkWell(
@@ -208,10 +233,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                        modalPengumpulan(context);
                       },
                     ),
                     InkWell(
@@ -253,10 +275,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                        modalPendampingan(context);
                       },
                     ),
                     InkWell(
@@ -298,7 +317,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        _showmodal(context);
+                        modalNilai(context);
                       },
                     ),
                   ],
@@ -309,82 +328,6 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
         ));
   }
 }
-// Widget popup(BuildContext context){
-//    showDialog(
-//       context: context,
-//       builder: (context) {
-//         double deviceWidth = MediaQuery.of(context).size.width;
-//         double deviceHeight = MediaQuery.of(context).size.height;
-//         return Dialog(
-//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//           elevation: 16,
-//           child: Container(
-//             width: deviceWidth,
-//             height: 130,
-//             child: Column(children: [
-//               InkWell(
-//                               child: Container(
-//                   margin: EdgeInsets.all(5),
-//                   alignment: Alignment.topRight,
-//                   child:Icon(Icons.close,color:Colors.red)),
-//                   onTap: (){
-//                     Navigator.pop(context);
-//                   }
-//               ),
-//               Text("Pilih Nama Dosen",style: TextStyle(fontSize: 16),),
-//               Container(
-//                 height: 30,
-//                 padding: EdgeInsets.symmetric(horizontal: 10),
-//                 margin: EdgeInsets.only(left: 20),
-//                 decoration: BoxDecoration(
-//                   border: Border.all(
-//                     width: 1,
-//                     color: Color(0xffB6B6B6),
-//                   ),
-//                   borderRadius: BorderRadius.circular(5),
-//                 ),
-//                 child: DropdownButton<String>(
-//                   icon: Container(
-//                     margin: EdgeInsets.only(left: 50),
-//                     child: Icon(Icons.keyboard_arrow_down),
-//                   ),
-//                   hint: Text(
-//                     'Kategori',
-//                     style: TextStyle(
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                   value: dosen,
-//                   iconSize: 24,
-//                   elevation: 16,
-//                   underline: Container(
-//                     height: 0,
-//                   ),
-//                   onChanged: (String newValue) async {
-//                     setState(() {
-//                       dosen = newValue;
-//                     });
-//                   },
-//                   items: <String>['A', 'B', 'C', 'D']
-//                       .map<DropdownMenuItem<String>>((String value) {
-//                     return DropdownMenuItem<String>(
-//                       value: value,
-//                       child: Text(
-//                         value,
-//                         style: TextStyle(
-//                           fontSize: 12,
-//                         ),
-//                       ),
-//                     );
-//                   }).toList(),
-//                 ),
-//               ),
-
-//             ],),
-//           ) );
-//       },
-//     );
-// }
 
 class UTS {
   final String id;
@@ -392,7 +335,6 @@ class UTS {
   final String gambar;
   final Widget widget;
 
-  //BUAT CONSTRUCTOR DIMANA SECARA DEFAULT CLASS INI AKAN MEMINTA DATA TERSEBUT
   UTS({
     @required this.id,
     @required this.title,
@@ -476,7 +418,7 @@ class _ModalState extends State<Modal> {
                           dosen = newValue;
                         });
                       },
-                       value: dosen,
+                      value: dosen,
                     ),
                   ),
                   SizedBox(height: 20),

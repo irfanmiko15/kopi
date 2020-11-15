@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/dosen/tanggal.dart';
 import 'package:kopi/constant.dart';
+
 class UTSDosen extends StatefulWidget {
   @override
   _UTSDosenState createState() => _UTSDosenState();
@@ -34,7 +35,7 @@ class _UTSDosenState extends State<UTSDosen> {
         title: 'Nilai',
         gambar: 'assets/image/nilaiblue.png',
         widget: Tanggal('Nilai')),
-     UTS(
+    UTS(
         id: 'DW6',
         title: 'Perbaikan Nilai',
         gambar: 'assets/image/perbaikannilai.png',
@@ -47,11 +48,9 @@ class _UTSDosenState extends State<UTSDosen> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          title: 
-              Text('Ujian Tengah Semester',
-                  style: TextStyle(fontFamily: 'Gothic')),
-                  centerTitle: true,
-
+          title: Text('Ujian Tengah Semester',
+              style: TextStyle(fontFamily: 'Gothic')),
+          centerTitle: true,
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -134,7 +133,6 @@ class UTS {
   final String gambar;
   final Widget widget;
 
-  //BUAT CONSTRUCTOR DIMANA SECARA DEFAULT CLASS INI AKAN MEMINTA DATA TERSEBUT
   UTS({
     @required this.id,
     @required this.title,
@@ -142,4 +140,3 @@ class UTS {
     @required this.widget,
   });
 }
-

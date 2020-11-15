@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class KeluhanDosen extends StatefulWidget {
   @override
@@ -7,6 +9,18 @@ class KeluhanDosen extends StatefulWidget {
 }
 
 class _KeluhanDosenState extends State<KeluhanDosen> {
+  AudioCache _audioPendamping;
+  _callNumber() async {
+    _audioPendamping.play('Pendampingan.mp3');
+    // const number = '081332893935'; //set the number here
+    // bool res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioPendamping = AudioCache(prefix: "audio/", fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -254,9 +268,4 @@ class _KeluhanDosenState extends State<KeluhanDosen> {
           ]),
         ));
   }
-}
-
-_callNumber() async {
-  const number = '081332893935'; //set the number here
-  bool res = await FlutterPhoneDirectCaller.callNumber(number);
 }

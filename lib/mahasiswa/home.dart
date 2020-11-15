@@ -3,6 +3,8 @@ import 'package:kopi/constant.dart';
 import 'package:kopi/mahasiswa/jadwal.dart';
 import 'package:kopi/mahasiswa/keluhan.dart';
 import 'package:kopi/mahasiswa/komunikasi.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,9 +12,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AudioCache _audioKomunikasi, _audioKeluhan, _audioJadwal;
+
+  void widgetKomunikasi() {
+    _audioKomunikasi.play('komunikasi.mp3');
+    Navigator.push(
+        context, MaterialPageRoute(builder: (ctx) => KomunikasiScreen()));
+  }
+
+  void widgetKeluhan() {
+    _audioKeluhan.play('Keluhan.mp3');
+    Navigator.push(context, MaterialPageRoute(builder: (_) => KeluhanScreen()));
+  }
+
+  void widgetJadwal() {
+    _audioJadwal.play('jadwal.mp3');
+    Navigator.push(context, MaterialPageRoute(builder: (_) => JadwalScreen()));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioKomunikasi = AudioCache(
+        prefix: "audio/",
+        fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+    _audioKeluhan = AudioCache(
+        prefix: "audio/",
+        fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+    _audioJadwal = AudioCache(
+        prefix: "audio/",
+        fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+  }
+
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
         appBar: AppBar(
           elevation: 0,
           toolbarHeight: 60,
@@ -23,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         body: SingleChildScrollView(
-                  child: Container(
+          child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(color: Color(0xFFB8DDFF)),
@@ -71,44 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                      InkWell(
-                      child:  Container(
-                         width: MediaQuery.of(context).size.width*0.38,
-                          height: MediaQuery.of(context).size.width*0.38,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(35),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF1D6297).withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 4,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                            
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:[
-                          Image.asset('assets/image/telfon.png'),
-                          Text("Komunikasi",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
-                          ]
-                          ),
-                        ),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (ctx)=>KomunikasiScreen()));
-                        },
-                        ),
-                        SizedBox(width: 10,),
                         InkWell(
-                                                  child: Container(
-                            width: MediaQuery.of(context).size.width*0.38,
-                            height: MediaQuery.of(context).size.width*0.38,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: MediaQuery.of(context).size.width * 0.38,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.all(
@@ -119,59 +120,113 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Color(0xFF1D6297).withOpacity(0.1),
                                   spreadRadius: 2,
                                   blurRadius: 4,
-                                  offset:
-                                      Offset(0, 3), // changes position of shadow
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
                                 ),
                               ],
                             ),
-                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children:[
-                            Image.asset('assets/image/iconkeluhan.png'),
-                            Text("Keluhan",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
-                            ]
-                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Image.asset('assets/image/telfon.png'),
+                                  Text(
+                                    "Komunikasi",
+                                    style: TextStyle(
+                                        fontFamily: 'Gothic',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ]),
                           ),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (ctx)=>KeluhanScreen()));
+                          onTap: () {
+                            widgetKomunikasi();
+                          },
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: MediaQuery.of(context).size.width * 0.38,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(35),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF1D6297).withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Image.asset('assets/image/iconkeluhan.png'),
+                                  Text(
+                                    "Keluhan",
+                                    style: TextStyle(
+                                        fontFamily: 'Gothic',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ]),
+                          ),
+                          onTap: () {
+                            widgetKeluhan();
                           },
                         )
                       ],
                     ),
-                      SizedBox(height: 20,),
-                        InkWell(
-                                                  child: Container(
-                            width: MediaQuery.of(context).size.width*0.38,
-                            height: MediaQuery.of(context).size.width*0.38,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(35),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFF1D6297).withOpacity(0.1),
-                                  spreadRadius: 2,
-                                  blurRadius: 4,
-                                  offset:
-                                      Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children:[
-                            Image.asset('assets/image/icontanggal.png'),
-                            Text("Jadwal",style: TextStyle(fontFamily: 'Gothic',fontSize: 18,fontWeight: FontWeight.bold),)
-                            ]
-                            ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.38,
+                        height: MediaQuery.of(context).size.width * 0.38,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(35),
                           ),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (ctx)=>JadwalScreen()));
-                          },
-                        )
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFF1D6297).withOpacity(0.1),
+                              spreadRadius: 2,
+                              blurRadius: 4,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset('assets/image/icontanggal.png'),
+                              Text(
+                                "Jadwal",
+                                style: TextStyle(
+                                    fontFamily: 'Gothic',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ]),
+                      ),
+                      onTap: () {
+                       widgetJadwal();
+                      },
+                    )
                   ]),
                 )
               ],

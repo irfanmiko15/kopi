@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class KeluhanScreen extends StatefulWidget {
   @override
@@ -7,6 +11,31 @@ class KeluhanScreen extends StatefulWidget {
 }
 
 class _KeluhanScreenState extends State<KeluhanScreen> {
+  AudioCache _audioPendamping;
+  _callNumber() async {
+    const number = '081332893935'; //set the number here
+    bool res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  audio() {
+    _audioPendamping.play('Pendamping.mp3');
+  }
+
+  Future<void> pendamping() {
+    audio();
+    // Imagine that this function is fetching user info from another service or database.
+    return Future.delayed(Duration(seconds: 3), () => _callNumber());
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioPendamping = AudioCache(
+        prefix: "audio/",
+        fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +43,8 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          title:  Text('Keluhan',
-                  style: TextStyle(fontFamily: 'Gothic')),
-                  centerTitle: true,
+          title: Text('Keluhan', style: TextStyle(fontFamily: 'Gothic')),
+          centerTitle: true,
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -77,7 +105,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                       _callNumber();
+                        _callNumber();
                       },
                     ),
                     InkWell(
@@ -160,8 +188,8 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                               )
                             ]),
                       ),
-                      onTap: () {
-                      _callNumber();
+                      onTap: () async {
+                        await audio();
                       },
                     ),
                     InkWell(
@@ -245,7 +273,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                       _callNumber();
+                        pendamping();
                       },
                     ),
                   ],
@@ -255,8 +283,4 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
           ]),
         ));
   }
-}
-_callNumber() async{
-  const number = '081332893935'; //set the number here
-  bool res = await FlutterPhoneDirectCaller.callNumber(number);
 }

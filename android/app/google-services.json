@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "64717281856",
+    "firebase_url": "https://kopi-df894.firebaseio.com",
+    "project_id": "kopi-df894",
+    "storage_bucket": "kopi-df894.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64717281856:android:b0cd72122e5eb172ad9da5",
+        "android_client_info": {
+          "package_name": "com.komunikasi.kopi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64717281856-aamapn9ov3e8kbt0tk5ucv82ng500njf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komunikasi.kopi",
+            "certificate_hash": "1c1300b405333f538e36b71c2d7a1451fef5eeeb"
+          }
+        },
+        {
+          "client_id": "64717281856-1hlre3kg6ec6khghlc3nm36v9gam4995.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komunikasi.kopi",
+            "certificate_hash": "d1d1ecb96da6cce342a887b80543a4fa09c4386a"
+          }
+        },
+        {
+          "client_id": "64717281856-e7ml3htd8mki1kt9sgvudbu26eav5ndg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmd1IgopIt4MRJa6Qh1M7TDX5Xn8ysNko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64717281856-e7ml3htd8mki1kt9sgvudbu26eav5ndg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
