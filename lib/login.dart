@@ -21,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
 
    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

@@ -4,6 +4,9 @@ import 'package:kopi/constant.dart';
 import 'package:kopi/dosen/tanggal.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UTSMahasiswa extends StatefulWidget {
   @override
@@ -18,7 +21,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal();
+          return Modal('1','Nilai','Nilai Saya Berapamj ya Pak');
         },
       );
     });
@@ -26,49 +29,52 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
 
   void modalPendampingan(context) {
     _audioCache.play('Pendamping.mp3');
-     setState(() {
+    setState(() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal();
+          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
         },
       );
     });
   }
 
-  void modalPengumpulan(context){
+  void modalPengumpulan(context) {
     _audioCache.play('Pengumpulan.mp3');
-   setState(() {
+    setState(() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal();
+          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
         },
       );
     });
   }
-  void modalPengaturan(context){
+
+  void modalPengaturan(context) {
     _audioCache.play('Peraturan.mp3');
     setState(() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal();
+          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
         },
       );
     });
   }
-  void modalTanggal(context){
+
+  void modalTanggal(context) {
     _audioCache.play('Tanggal.mp3');
     setState(() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal();
+          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
         },
       );
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -149,7 +155,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                       modalTanggal(context);
+                        modalTanggal(context);
                       },
                     ),
                     InkWell(
@@ -191,7 +197,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                       modalPengaturan(context);
+                        modalPengaturan(context);
                       },
                     ),
                     InkWell(
@@ -344,12 +350,49 @@ class UTS {
 }
 
 class Modal extends StatefulWidget {
+  final String pertanyaan_id;
+  final String titel;
+  final String body;
+  Modal(this.pertanyaan_id,this.titel,this.body);
   @override
   _ModalState createState() => _ModalState();
 }
 
 class _ModalState extends State<Modal> {
+  bool _isLoading = false;
   String dosen;
+  String id = '';
+  chat() async {
+    setState(() {
+      _isLoading = true;
+    });
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    id = sharedPreferences.getString('id') ?? '';
+
+    print("muncul : $id");
+
+    await http
+        .post("http://45.13.132.46:3003/api/chat/insert",
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(
+                {'pertanyaan_id': "1", 'mahasiswa_id': id, 'dosen_id': "5"}))
+        .then((response) async {
+      var data = jsonDecode(response.body);
+      print(data.toString());
+      if (data['error'].toString() == "false") {
+        await http.post(
+          "http://45.13.132.46:3003/api/fcm/send",
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            'dosen_id':"1",
+            'title':widget.titel.toString(),
+            'message':widget.body.toString()
+          })
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -440,7 +483,8 @@ class _ModalState extends State<Modal> {
                       ),
                     ),
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                      chat();
+                      Navigator.pop(context);
                     },
                   ),
                 ],
