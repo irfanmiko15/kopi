@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kopi/mahasiswa/cekjadwal.dart';
 
 class JadwalScreen extends StatefulWidget {
   @override
@@ -101,7 +102,7 @@ class _JadwalScreenState extends State<JadwalScreen> {
                             ]),
                       ),
                       onTap: () {
-                       
+                       Navigator.push(context, MaterialPageRoute(builder: (ctx)=>JadwalSemesterIniScreen()));
                       },
                     ),
                    
@@ -144,7 +145,7 @@ class _JadwalScreenState extends State<JadwalScreen> {
                             ]),
                       ),
                       onTap: () {
-                      
+                       Navigator.push(context, MaterialPageRoute(builder: (ctx)=>JadwalSemesterIniScreen()));
                       },
                     ),
                     

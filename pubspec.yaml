@@ -36,6 +36,10 @@ dependencies:
   fluttertoast: ^3.1.3
   intl: ^0.15.7
   http: ^0.12.1
+  shared_preferences:
+  lottie: ^0.7.0+1
+  dio:
+  shimmer: ^1.1.1
 
 dev_dependencies:
   flutter_test:

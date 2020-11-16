@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "64717281856-s8q8flna484fnn4tsit9dbabiepqi8ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komunikasi.kopi",
+            "certificate_hash": "1759ccf329dfaa3d319c70de91190a446ccfa650"
+          }
+        },
+        {
           "client_id": "64717281856-aamapn9ov3e8kbt0tk5ucv82ng500njf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
