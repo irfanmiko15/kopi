@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kopi/dosen/keluhandosen.dart';
 import 'package:kopi/dosen/pesanmasuk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../login.dart';
 import 'jadwaldosen.dart';
 
 void main() {
@@ -13,7 +15,18 @@ class HomeDosen extends StatefulWidget {
   _HomeDosenState createState() => _HomeDosenState();
 }
 
+
 class _HomeDosenState extends State<HomeDosen> {
+   void logout() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.remove('role');
+        localStorage.remove('id');
+        localStorage.remove('token');
+    Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (ctx) => LoginScreen()),
+              (ctx) => false);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +34,9 @@ class _HomeDosenState extends State<HomeDosen> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          leading: InkWell(child: Image.asset('assets/image/exitwhite.png')),
+          leading: InkWell(
+            onTap: (){logout();},
+            child: Image.asset('assets/image/exitwhite.png')),
           actions: <Widget>[
             InkWell(child: Image.asset('assets/image/profil.png')),
           ],

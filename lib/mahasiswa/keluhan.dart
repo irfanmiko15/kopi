@@ -12,11 +12,10 @@ class KeluhanScreen extends StatefulWidget {
 
 class _KeluhanScreenState extends State<KeluhanScreen> {
   AudioCache _audioPendamping;
-  _callNumber() async {
-    const number = '081332893935'; //set the number here
+  _callNumberPendamping() async {
+    const number = '08993950031'; //set the number here
     bool res = await FlutterPhoneDirectCaller.callNumber(number);
   }
-
   audio() {
     _audioPendamping.play('Pendamping.mp3');
   }
@@ -24,7 +23,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
   Future<void> pendamping() {
     audio();
     // Imagine that this function is fetching user info from another service or database.
-    return Future.delayed(Duration(seconds: 3), () => _callNumber());
+    return Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
   }
 
   @override
@@ -105,7 +104,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                       
                       },
                     ),
                     InkWell(
@@ -147,7 +146,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                        
                       },
                     ),
                     InkWell(
@@ -231,7 +230,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                       
                       },
                     ),
                     InkWell(

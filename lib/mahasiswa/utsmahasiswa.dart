@@ -21,7 +21,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1','Nilai','Nilai Saya Berapamj ya Pak');
+          return Modal('1', 'Nilai', 'Nilai Saya Berapamj ya Pak');
         },
       );
     });
@@ -33,7 +33,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
+          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
         },
       );
     });
@@ -45,7 +45,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
+          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
         },
       );
     });
@@ -57,7 +57,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
+          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
         },
       );
     });
@@ -69,7 +69,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1','Nilai','Nilai Saya Berapa ya Pak');
+          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
         },
       );
     });
@@ -353,7 +353,7 @@ class Modal extends StatefulWidget {
   final String pertanyaan_id;
   final String titel;
   final String body;
-  Modal(this.pertanyaan_id,this.titel,this.body);
+  Modal(this.pertanyaan_id, this.titel, this.body);
   @override
   _ModalState createState() => _ModalState();
 }
@@ -362,6 +362,21 @@ class _ModalState extends State<Modal> {
   bool _isLoading = false;
   String dosen;
   String id = '';
+  List getdosen = List();
+  _getDosen() async {
+    await http
+        .get(
+      "http://45.13.132.46:3003/api/dosen",
+    )
+        .then((response) async {
+      var data = jsonDecode(response.body);
+      setState(() {
+        getdosen = data['data'];
+        print(data.toString());
+      });
+    });
+  }
+
   chat() async {
     setState(() {
       _isLoading = true;
@@ -375,22 +390,34 @@ class _ModalState extends State<Modal> {
         .post("http://45.13.132.46:3003/api/chat/insert",
             headers: {"Content-Type": "application/json"},
             body: jsonEncode(
-                {'pertanyaan_id': "1", 'mahasiswa_id': id, 'dosen_id': "5"}))
+                {'pertanyaan_id': "1", 'mahasiswa_id': id, 'dosen_id': dosen}))
         .then((response) async {
       var data = jsonDecode(response.body);
       print(data.toString());
       if (data['error'].toString() == "false") {
-        await http.post(
-          "http://45.13.132.46:3003/api/fcm/send",
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            'dosen_id':"1",
-            'title':widget.titel.toString(),
-            'message':widget.body.toString()
-          })
-        );
+        await http.post("http://45.13.132.46:3003/api/fcm/send",
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode({
+              'dosen_id': dosen,
+              'title': widget.titel.toString(),
+              'message': widget.body.toString()
+            }));
       }
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getDosen();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _getDosen().dispose();
   }
 
   @override
@@ -428,9 +455,9 @@ class _ModalState extends State<Modal> {
                       color: ColorPalette.backgroundColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: DropdownButton<String>(
+                    child: DropdownButton(
+                      isExpanded: true,
                       icon: Container(
-                        margin: EdgeInsets.only(left: deviceWidth * 0.45),
                         child: Icon(Icons.keyboard_arrow_down),
                       ),
                       hint: Text(
@@ -444,22 +471,22 @@ class _ModalState extends State<Modal> {
                       underline: Container(
                         height: 0,
                       ),
-                      items: <String>['A', 'B', 'C', 'D']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
+                      items: getdosen.map((item) {
+                        return DropdownMenuItem(
                           child: Text(
-                            value,
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
+                            item['nama'],
+                            style: TextStyle(fontSize: 12),
                           ),
+                          value: item['id'].toString(),
                         );
                       }).toList(),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dosen = newValue;
-                        });
+                      onChanged: (value) {
+                        if (this.mounted) {
+                          setState(() {
+                            dosen = value;
+                            print(dosen);
+                          });
+                        }
                       },
                       value: dosen,
                     ),

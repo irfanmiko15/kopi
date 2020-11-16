@@ -61,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Platform.isAndroid ? 'com.komunikasi.kopi' : 'com.komunikasi.kopi',
       'Kopi',
       'your channel description',
+      icon: 'ic_launcher',
+      largeIcon: 'ic_launcher',
       playSound: true,
       enableVibration: true,
       importance: Importance.Max,
