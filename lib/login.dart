@@ -141,15 +141,21 @@ class _LoginScreenState extends State<LoginScreen> {
       var data = jsonDecode(response.body);
       print(data.toString());
       if (data['error'].toString() == "false") {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
+       
+        if (data['data']['role'] == 1) {
+           SharedPreferences localStorage = await SharedPreferences.getInstance();
         localStorage.setString('role', data['data']['role'].toString());
         localStorage.setString('id', data['data']['id'].toString());
-        if (data['data']['role'] == 1) {
+        localStorage.setString('token', pushtoken.toString());
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (ctx) => HomeScreen()),
               (ctx) => false);
         } else {
+           SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('role', data['data']['role'].toString());
+        localStorage.setString('id', data['data']['id'].toString());
+        localStorage.setString('token', pushtoken.toString());
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (ctx) => HomeDosen()), (ctx) => false);
         }

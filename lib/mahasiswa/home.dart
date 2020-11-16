@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kopi/constant.dart';
+import 'package:kopi/login.dart';
 import 'package:kopi/mahasiswa/jadwal.dart';
 import 'package:kopi/mahasiswa/keluhan.dart';
 import 'package:kopi/mahasiswa/komunikasi.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -45,6 +47,17 @@ class _HomeScreenState extends State<HomeScreen> {
         fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
 
+  void logout() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.remove('role');
+        localStorage.remove('id');
+        localStorage.remove('token');
+    Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (ctx) => LoginScreen()),
+              (ctx) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          leading: InkWell(child: Image.asset('assets/image/exitwhite.png')),
+          leading: InkWell(child: Image.asset('assets/image/exitwhite.png'),onTap: (){
+            logout();
+            
+          },),
           actions: <Widget>[
             InkWell(child: Image.asset('assets/image/profil.png')),
           ],

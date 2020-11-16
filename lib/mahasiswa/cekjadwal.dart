@@ -13,51 +13,32 @@ class JadwalSemesterIniScreen extends StatefulWidget {
 }
 
 Future<List<Jadwal>> _getJadwal() async {
+  await Future.delayed(Duration(seconds: 2));
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   var id = localStorage.getString('id');
-  
- var data = await http
-      .post("http://45.13.132.46:3003/api/jadwal",
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "mahasiswa_id": id,
-          }));
-    var jsonData = json.decode(data.body);
-    List<Jadwal> sliders = [];
-    for (var u in jsonData['data']) {
-      Jadwal slider = Jadwal(u["hari"], u["jam"], u["nama_matkul"],u["id"].toString());
-      //print(u["image"]);
-      sliders.add(slider);
-    }
-    // laporan = data['body'];
-   
-    return sliders;
+
+  var data = await http.post("http://45.13.132.46:3003/api/jadwal",
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "mahasiswa_id": id,
+      }));
+  var jsonData = json.decode(data.body);
+  List<Jadwal> sliders = [];
+  for (var u in jsonData['data']) {
+    Jadwal slider =
+        Jadwal(u["hari"], u["jam"], u["nama_matkul"], u["id"].toString());
+    //print(u["image"]);
+    sliders.add(slider);
+  }
+  // laporan = data['body'];
+
+  return sliders;
 }
 
 @override
 class _JadwalSemesterIniScreenState extends State<JadwalSemesterIniScreen> {
-  List jadwal = List();
-  getJadwal() async {
-     SharedPreferences localStorage = await SharedPreferences.getInstance();
-  var id = localStorage.getString('id');
-    await http
-      .post("http://45.13.132.46:3003/api/jadwal",
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "mahasiswa_id": id,
-          })).then((response) async {
-      var data = jsonDecode(response.body);
-      print(data.toString());
-      if (!mounted) { 
-      return;
- }
-      setState(() {
-        jadwal = data['data'];
-       
-        
-      });
-    });
-  }
+  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -204,7 +185,8 @@ class _JadwalSemesterIniScreenState extends State<JadwalSemesterIniScreen> {
                                                 child: Container(
                                               child: Text(
                                                   snapshot
-                                                      .data[index].id.toString(),
+                                                      .data[index].nama_matkul
+                                                      .toString(),
                                                   style: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
@@ -224,7 +206,8 @@ class _JadwalSemesterIniScreenState extends State<JadwalSemesterIniScreen> {
                                         ),
                                         Text(
                                             "Nama Kelas : " +
-                                                snapshot.data[index].nama_matkul.toString(),
+                                                snapshot.data[index].nama_matkul
+                                                    .toString(),
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 12,
@@ -244,7 +227,8 @@ class _JadwalSemesterIniScreenState extends State<JadwalSemesterIniScreen> {
                                         ),
                                         Text(
                                             "Waktu Perkuliahan : " +
-                                                snapshot.data[index].jam.toString(),
+                                                snapshot.data[index].jam
+                                                    .toString(),
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 12,
@@ -278,5 +262,5 @@ class Jadwal {
   final String nama_matkul;
   final String id;
 
-  Jadwal(this.hari, this.jam, this.nama_matkul,this.id);
+  Jadwal(this.hari, this.jam, this.nama_matkul, this.id);
 }

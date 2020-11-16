@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:kopi/constant.dart';
+import 'package:kopi/dosen/homedosen.dart';
 import 'package:kopi/mahasiswa/home.dart';
 import 'package:kopi/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,7 +13,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   bool isLoading = false;
   bool isLoggedIn = false;
 
@@ -27,19 +28,37 @@ class _SplashScreenState extends State<SplashScreen> {
       isLoading = true;
     });
 
-    // prefs = await SharedPreferences.getInstance();
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.getString('role');
+    localStorage.getString('id');
 
-    // isLoggedIn = await googleSignIn.isSignedIn();
-    // if (isLoggedIn) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
-        (ctx) => false);
-    // } else {
-    //   Navigator.of(context).pushReplacementNamed('/IntroSlider');
-    // }
+    if (localStorage.getString('id') != null) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+          (ctx) => false);
+          if(localStorage.getString('role')=="1"){
+             Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (ctx) => HomeScreen()),
+              (ctx) => false);
+
+          }
+          else{
+             Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (ctx) => HomeDosen()), (ctx) => false);
+          }
+    }
+    else{
+       Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+          (ctx) => false);
+    }
 
     this.setState(() {
       isLoading = false;
@@ -72,13 +91,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   "assets/image/logo.png",
                   fit: BoxFit.fitWidth,
                 )),
-           
             Container(
-      
                 child: Image.asset(
-              "assets/image/iconsplash.png",fit: BoxFit.fitHeight,
+              "assets/image/iconsplash.png",
+              fit: BoxFit.fitHeight,
               width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.60,
+              height: MediaQuery.of(context).size.height * 0.60,
             )),
           ],
         ),
