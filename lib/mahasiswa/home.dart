@@ -6,6 +6,7 @@ import 'package:kopi/mahasiswa/keluhan.dart';
 import 'package:kopi/mahasiswa/komunikasi.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:kopi/profil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -70,7 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
             
           },),
           actions: <Widget>[
-            InkWell(child: Image.asset('assets/image/profil.png')),
+
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ctx)=>Profil()));
+              },
+              child: Image.asset('assets/image/profil.png')),
           ],
         ),
         body: SingleChildScrollView(

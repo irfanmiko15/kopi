@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kopi/dosen/keluhandosen.dart';
 import 'package:kopi/dosen/pesanmasuk.dart';
+import 'package:kopi/profil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../login.dart';
@@ -38,7 +39,11 @@ class _HomeDosenState extends State<HomeDosen> {
             onTap: (){logout();},
             child: Image.asset('assets/image/exitwhite.png')),
           actions: <Widget>[
-            InkWell(child: Image.asset('assets/image/profil.png')),
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ctx)=>Profil()));
+              }, 
+              child: Image.asset('assets/image/profil.png')),
           ],
         ),
         body: SingleChildScrollView(
