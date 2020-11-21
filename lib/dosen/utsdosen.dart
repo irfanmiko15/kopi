@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:kopi/dosen/tanggal.dart';
+import 'package:kopi/dosen/detailuts.dart';
 import 'package:kopi/constant.dart';
 
 class UTSDosen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/constant.dart';
-import 'package:kopi/dosen/tanggal.dart';
+import 'package:kopi/dosen/detailuts.dart';
 
 class UASMahasiswa extends StatefulWidget {
   @override

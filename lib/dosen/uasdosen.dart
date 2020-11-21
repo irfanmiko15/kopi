@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kopi/dosen/tanggal.dart';
+import 'package:kopi/dosen/detailuas.dart';
+import 'package:kopi/dosen/detailuts.dart';
 
 class UasDosen extends StatefulWidget {
   @override
@@ -12,32 +13,32 @@ class _UasDosenState extends State<UasDosen> {
         id: 'DW1',
         title: 'Tanggal',
         gambar: 'assets/image/tanggalblue.png',
-        widget: Tanggal('Tanggal')),
+        widget: DetailUas('Tanggal')),
     UTS(
         id: 'DW2',
         title: 'Peraturan',
         gambar: 'assets/image/tanggalblue.png',
-        widget: Tanggal('Peraturan')),
+        widget: DetailUas('Peraturan')),
     UTS(
         id: 'DW3',
         title: 'Pengumpulan',
         gambar: 'assets/image/pengumpulanblue.png',
-        widget: Tanggal('Pengumpulan')),
+        widget: DetailUas('Pengumpulan')),
     UTS(
         id: 'DW4',
         title: 'Pendampingan',
         gambar: 'assets/image/pendampingblue.png',
-        widget: Tanggal('Pendampingan')),
+        widget: DetailUas('Pendampingan')),
     UTS(
         id: 'DW5',
         title: 'Nilai',
         gambar: 'assets/image/nilaiblue.png',
-        widget: Tanggal('Nilai')),
+        widget: DetailUas('Nilai')),
      UTS(
         id: 'DW6',
         title: 'Perbaikan Nilai',
         gambar: 'assets/image/perbaikannilai.png',
-        widget: Tanggal('Perbaikan Nilai')),
+        widget: DetailUas('Perbaikan Nilai')),
   ];
  
   @override
@@ -48,7 +49,7 @@ class _UasDosenState extends State<UasDosen> {
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
           title: 
-              Text('Ujian Tengah Semester',
+              Text('Ujian Akhir Semester',
                   style: TextStyle(fontFamily: 'Gothic')),
                   centerTitle: true,
 
