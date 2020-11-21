@@ -16,7 +16,7 @@ class _UasDosenState extends State<UasDosen> {
     UTS(
         id: 'DW2',
         title: 'Peraturan',
-        gambar: 'assets/image/tanggalblue.png',
+        gambar:   'assets/image/peraturanblue.png',
         widget: Tanggal('Peraturan')),
     UTS(
         id: 'DW3',

@@ -105,7 +105,7 @@ class _HomeDosenState extends State<HomeDosen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Image.asset('assets/image/telfon.png'),
+                                  Image.asset('assets/image/komunikasi.png',height: MediaQuery.of(context).size.height*0.1,),
                                   Text(
                                     "Pesan Masuk",
                                     style: TextStyle(
@@ -155,7 +155,7 @@ class _HomeDosenState extends State<HomeDosen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Image.asset('assets/image/iconkeluhan.png'),
+                                  Image.asset('assets/image/keluhan.png',height: MediaQuery.of(context).size.height*0.1,),
                                   Text(
                                     "Keluhan",
                                     style: TextStyle(
@@ -200,7 +200,7 @@ class _HomeDosenState extends State<HomeDosen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Image.asset('assets/image/icontanggal.png'),
+                            Image.asset('assets/image/jadwal.png',height: MediaQuery.of(context).size.height*0.1,),
                             Text(
                               "Jadwal",
                               style: TextStyle(

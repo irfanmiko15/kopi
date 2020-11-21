@@ -1,7 +1,12 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/constant.dart';
 import 'package:kopi/dosen/tanggal.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UASMahasiswa extends StatefulWidget {
   @override
@@ -9,17 +14,87 @@ class UASMahasiswa extends StatefulWidget {
 }
 
 class _UASMahasiswaState extends State<UASMahasiswa> {
- 
-  _showmodal(context) {
+     AudioCache _audioCache;
+   void modalNilai(context) {
+    _audioCache.play('nilai.mp3');
     setState(() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal();
+          return Modal('15', 'Nilai', 'Bapak/Ibu Nilai UAS Saya Berapa ya?');
         },
       );
     });
   }
+
+  void modalPendampingan(context) {
+    _audioCache.play('Pendamping.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal('12', 'Pendamping', 'Bapak/Ibu apakah saya boleh menerima pendampingan selama mengerjakan UAS mata kuliah Bapak/Ibu?');
+        },
+      );
+    });
+  }
+
+  void modalPengumpulan(context) {
+    _audioCache.play('Pengumpulan.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal('11', 'Pengumpulan', 'Bapak/Ibu bagaimana teknis pengumpulan UAS mata kuliah Bapak/Ibu?');
+        },
+      );
+    });
+  }
+
+  void modalPengaturan(context) {
+    _audioCache.play('Peraturan.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal('10', 'Peraturan', 'Bapak/Ibu bagaimana teknis pelaksanaan UAS mata kuliah Bapak/Ibu?');
+        },
+      );
+    });
+  }
+
+  void modalTanggal(context) {
+    _audioCache.play('Tanggal.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal('8', 'Tanggal', 'Bapak/Ibu kapan UAS mata kuliah Bapak/Ibu akan dilaksanakan?');
+        },
+      );
+    });
+  }
+   void modalPerbaikan(context) {
+    _audioCache.play('Perbaikan.mp3');
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal('8', 'Tanggal', 'Bapak/Ibu apakah saya boleh melakukan perbaikan untuk nilai UAS saya?');
+        },
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioCache = AudioCache(
+        prefix: "audio/",
+        fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +167,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                        modalTanggal(context);
                       },
                     ),
                     InkWell(
@@ -121,7 +193,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Image.asset(
-                                'assets/image/tanggalblue.png',
+                                 'assets/image/peraturanblue.png',
                                 height: 80,
                               ),
                               SizedBox(
@@ -137,10 +209,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                        modalPengaturan(context);
                       },
                     ),
                     InkWell(
@@ -182,10 +251,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                        modalPengumpulan(context);
                       },
                     ),
                     InkWell(
@@ -227,10 +293,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => uts[index].widget));
+                        modalPendampingan(context);
                       },
                     ),
                     InkWell(
@@ -272,7 +335,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        _showmodal(context);
+                        modalNilai(context);
                       },
                     ),
                      InkWell(
@@ -314,7 +377,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             ]),
                       ),
                       onTap: () {
-                        _showmodal(context);
+                        modalPerbaikan(context);
                       },
                     ),
                   ],
@@ -402,14 +465,14 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
 //     );
 // }
 
-class UTS {
+class UAS {
   final String id;
   final String title;
   final String gambar;
   final Widget widget;
 
   //BUAT CONSTRUCTOR DIMANA SECARA DEFAULT CLASS INI AKAN MEMINTA DATA TERSEBUT
-  UTS({
+  UAS({
     @required this.id,
     @required this.title,
     @required this.gambar,
@@ -418,12 +481,76 @@ class UTS {
 }
 
 class Modal extends StatefulWidget {
+  final String pertanyaan_id;
+  final String titel;
+  final String body;
+  Modal(this.pertanyaan_id, this.titel, this.body);
   @override
   _ModalState createState() => _ModalState();
 }
 
 class _ModalState extends State<Modal> {
+  bool _isLoading = false;
   String dosen;
+  String id = '';
+  List getdosen = List();
+  _getDosen() async {
+    await http
+        .get(
+      "http://45.13.132.46:3003/api/dosen",
+    )
+        .then((response) async {
+      var data = jsonDecode(response.body);
+      setState(() {
+        getdosen = data['data'];
+        print(data.toString());
+      });
+    });
+  }
+
+  chat() async {
+    setState(() {
+      _isLoading = true;
+    });
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    id = sharedPreferences.getString('id') ?? '';
+
+    print("muncul : $id");
+
+    await http
+        .post("http://45.13.132.46:3003/api/chat/insert",
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(
+                {'pertanyaan_id': widget.pertanyaan_id.toString(), 'mahasiswa_id': id, 'dosen_id': dosen}))
+        .then((response) async {
+      var data = jsonDecode(response.body);
+      print(data.toString());
+      if (data['error'].toString() == "false") {
+        await http.post("http://45.13.132.46:3003/api/fcm/send",
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode({
+              'dosen_id': dosen,
+              'title': widget.titel.toString(),
+              'message': widget.body.toString()
+            }));
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getDosen();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _getDosen().dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -459,9 +586,9 @@ class _ModalState extends State<Modal> {
                       color: ColorPalette.backgroundColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: DropdownButton<String>(
+                    child: DropdownButton(
+                      isExpanded: true,
                       icon: Container(
-                        margin: EdgeInsets.only(left: deviceWidth * 0.45),
                         child: Icon(Icons.keyboard_arrow_down),
                       ),
                       hint: Text(
@@ -475,24 +602,24 @@ class _ModalState extends State<Modal> {
                       underline: Container(
                         height: 0,
                       ),
-                      items: <String>['A', 'B', 'C', 'D']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
+                      items: getdosen.map((item) {
+                        return DropdownMenuItem(
                           child: Text(
-                            value,
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
+                            item['nama'],
+                            style: TextStyle(fontSize: 12),
                           ),
+                          value: item['id'].toString(),
                         );
                       }).toList(),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dosen = newValue;
-                        });
+                      onChanged: (value) {
+                        if (this.mounted) {
+                          setState(() {
+                            dosen = value;
+                            print(dosen);
+                          });
+                        }
                       },
-                       value: dosen,
+                      value: dosen,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -514,7 +641,8 @@ class _ModalState extends State<Modal> {
                       ),
                     ),
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                      chat();
+                      Navigator.pop(context);
                     },
                   ),
                 ],

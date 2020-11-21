@@ -21,7 +21,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1', 'Nilai', 'Nilai Saya Berapamj ya Pak');
+          return Modal('7', 'Nilai', 'Bapak/Ibu Nilai UTS Saya Berapa ya?');
         },
       );
     });
@@ -33,7 +33,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
+          return Modal('6', 'Pendamping', 'Bapak/Ibu apakah saya boleh menerima pendampingan selama mengerjakan UTS mata kuliah Bapak/Ibu?');
         },
       );
     });
@@ -45,7 +45,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
+          return Modal('5', 'Pengumpulan', 'Bapak/Ibu bagaimana teknis pengumpulan UTS mata kuliah Bapak/Ibu?');
         },
       );
     });
@@ -57,7 +57,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
+          return Modal('4', 'Peraturan', 'Bapak/Ibu bagaimana teknis pelaksanaan UTS mata kuliah Bapak/Ibu?');
         },
       );
     });
@@ -69,7 +69,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('1', 'Nilai', 'Nilai Saya Berapa ya Pak');
+          return Modal('3', 'Tanggal', 'Bapak/Ibu kapan UTS mata kuliah Bapak/Ibu akan dilaksanakan?');
         },
       );
     });
@@ -181,7 +181,7 @@ class _UTSMahasiswaState extends State<UTSMahasiswa> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Image.asset(
-                                'assets/image/tanggalblue.png',
+                                'assets/image/peraturanblue.png',
                                 height: 80,
                               ),
                               SizedBox(
@@ -390,7 +390,7 @@ class _ModalState extends State<Modal> {
         .post("http://45.13.132.46:3003/api/chat/insert",
             headers: {"Content-Type": "application/json"},
             body: jsonEncode(
-                {'pertanyaan_id': "1", 'mahasiswa_id': id, 'dosen_id': dosen}))
+                {'pertanyaan_id': widget.pertanyaan_id.toString(), 'mahasiswa_id': id, 'dosen_id': dosen}))
         .then((response) async {
       var data = jsonDecode(response.body);
       print(data.toString());
@@ -413,12 +413,12 @@ class _ModalState extends State<Modal> {
     _getDosen();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _getDosen().dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   _getDosen().dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
