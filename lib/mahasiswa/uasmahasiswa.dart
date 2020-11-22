@@ -3,10 +3,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/constant.dart';
-import 'package:kopi/dosen/tanggal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kopi/dosen/detailuts.dart';
+
 
 class UASMahasiswa extends StatefulWidget {
   @override
@@ -80,7 +81,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('8', 'Tanggal', 'Bapak/Ibu apakah saya boleh melakukan perbaikan untuk nilai UAS saya?');
+          return Modal('13', 'Tanggal', 'Bapak/Ibu apakah saya boleh melakukan perbaikan untuk nilai UAS saya?');
         },
       );
     });
@@ -544,12 +545,12 @@ class _ModalState extends State<Modal> {
     _getDosen();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _getDosen().dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   _getDosen().dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

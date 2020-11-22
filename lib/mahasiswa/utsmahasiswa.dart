@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kopi/constant.dart';
-import 'package:kopi/dosen/tanggal.dart';
+import 'package:kopi/dosen/detailuts.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:http/http.dart' as http;
