@@ -79,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _sound=true;
   void _showDialog(data) {
     // flutter defined function
     showDialog(
@@ -102,32 +103,33 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
-  void loading() {
+  loading() {
     // flutter defined function
-    if (_isLoading = true) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            
-            content: Container(
-              margin: EdgeInsets.all(10),
-              child:Row(
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(width: 10),
-                  Text("Loading...")
 
-                ],
-              )));
-        },
-      );
-    } else {
-      Navigator.of(context).pop();
-    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+            content: Container(
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(width: 10),
+                    Text("Loading...")
+                  ],
+                )));
+                
+      },
+      barrierDismissible: false,
+    );
   }
 
   login() {
@@ -150,17 +152,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 'fcm': pushtoken
               }))
           .then((response) async {
+            Navigator.of(context).pop();
         var data = jsonDecode(response.body);
         print(data.toString());
-        
+
         if (data['error'].toString() == "false") {
           if (data['data']['role'] == 1) {
             SharedPreferences localStorage =
                 await SharedPreferences.getInstance();
             localStorage.setString('role', data['data']['role'].toString());
             localStorage.setString('id', data['data']['id'].toString());
-            localStorage.setString('nim', data['data']['username'].toString());
+            localStorage.setString('username', data['data']['username'].toString());
             localStorage.setString('token', pushtoken.toString());
+            localStorage.setBool('sound', _sound);
+
             setState(() {
               _isLoading = false;
             });
@@ -173,20 +178,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 await SharedPreferences.getInstance();
             localStorage.setString('role', data['data']['role'].toString());
             localStorage.setString('id', data['data']['id'].toString());
-            localStorage.setString('nim', data['data']['username'].toString());
+            localStorage.setString('username', data['data']['username'].toString());
             localStorage.setString('token', pushtoken.toString());
+            localStorage.setBool('sound', _sound);
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (ctx) => HomeDosen()),
                 (ctx) => false);
+
             setState(() {
               _isLoading = false;
             });
           }
         } else {
-          _showDialog(data['msg']);
           setState(() {
             _isLoading = false;
+            _showDialog(data['msg']);
           });
         }
       });
