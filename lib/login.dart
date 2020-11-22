@@ -13,7 +13,6 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -22,28 +21,28 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
 
-   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
-  coba()async{
-      firebaseMessaging.getToken().then((token) async {
-       var pushtoken = token.toString();
-        firebaseMessaging.requestNotificationPermissions();
-    firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
-      print('onMessage: $message');
-      showNotification(message['notification']);
-      return;
-    }, onResume: (Map<String, dynamic> message) {
-      print('onResume: $message');
-      showNotification(message['notification']);
-      return;
-    }, onLaunch: (Map<String, dynamic> message) {
-      print('onLaunch: $message');
-      showNotification(message['notification']);
-      return;
-    });
+  coba() async {
+    firebaseMessaging.getToken().then((token) async {
+      var pushtoken = token.toString();
+      firebaseMessaging.requestNotificationPermissions();
+      firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
+        print('onMessage: $message');
+        showNotification(message['notification']);
+        return;
+      }, onResume: (Map<String, dynamic> message) {
+        print('onResume: $message');
+        showNotification(message['notification']);
+        return;
+      }, onLaunch: (Map<String, dynamic> message) {
+        print('onLaunch: $message');
+        showNotification(message['notification']);
+        return;
+      });
       print("coba");
       print("coba: $pushtoken");
-      });
+    });
   }
 
   void configLocalNotification() async {
@@ -54,7 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
-   void showNotification(message) async {
+
+  void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
       Platform.isAndroid ? 'com.komunikasi.kopi' : 'com.komunikasi.kopi',
       'Kopi',
@@ -73,7 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
         message['body'].toString(), platformChannelSpecifics,
         payload: json.encode(message));
   }
-    // TODO: implement initState
+
+  // TODO: implement initState
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -101,76 +102,97 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  
+
   void loading() {
     // flutter defined function
-    if(_isLoading==true){
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return Container(
-          child: CircularProgressIndicator()
+    if (_isLoading = true) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            
+            content: Container(
+              margin: EdgeInsets.all(10),
+              child:Row(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 10),
+                  Text("Loading...")
 
-        );},
-    );}
-    else{
-       Navigator.of(context).pop();
+                ],
+              )));
+        },
+      );
+    } else {
+      Navigator.of(context).pop();
     }
   }
 
-  login()  {
-    
+  login() {
     setState(() {
       _isLoading = true;
     });
     loading();
 
     print("check");
-    
+
     firebaseMessaging.getToken().then((token) async {
-     var pushtoken = token.toString();
+      var pushtoken = token.toString();
       print("token : $pushtoken");
       await http
-        .post("http://45.13.132.46:3003/api/login",
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode({
-              'username': username.text,
-              'password': password.text,
-              'fcm' : pushtoken
-            }))
-        .then((response) async {
-      var data = jsonDecode(response.body);
-      print(data.toString());
-      if (data['error'].toString() == "false") {
-       
-        if (data['data']['role'] == 1) {
-           SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('role', data['data']['role'].toString());
-        localStorage.setString('id', data['data']['id'].toString());
-        localStorage.setString('token', pushtoken.toString());
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (ctx) => HomeScreen()),
-              (ctx) => false);
+          .post("http://45.13.132.46:3003/api/login",
+              headers: {"Content-Type": "application/json"},
+              body: jsonEncode({
+                'username': username.text,
+                'password': password.text,
+                'fcm': pushtoken
+              }))
+          .then((response) async {
+        var data = jsonDecode(response.body);
+        print(data.toString());
+        
+        if (data['error'].toString() == "false") {
+          if (data['data']['role'] == 1) {
+            SharedPreferences localStorage =
+                await SharedPreferences.getInstance();
+            localStorage.setString('role', data['data']['role'].toString());
+            localStorage.setString('id', data['data']['id'].toString());
+            localStorage.setString('nim', data['data']['username'].toString());
+            localStorage.setString('token', pushtoken.toString());
+            setState(() {
+              _isLoading = false;
+            });
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (ctx) => HomeScreen()),
+                (ctx) => false);
+          } else {
+            SharedPreferences localStorage =
+                await SharedPreferences.getInstance();
+            localStorage.setString('role', data['data']['role'].toString());
+            localStorage.setString('id', data['data']['id'].toString());
+            localStorage.setString('nim', data['data']['username'].toString());
+            localStorage.setString('token', pushtoken.toString());
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (ctx) => HomeDosen()),
+                (ctx) => false);
+            setState(() {
+              _isLoading = false;
+            });
+          }
         } else {
-           SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('role', data['data']['role'].toString());
-        localStorage.setString('id', data['data']['id'].toString());
-        localStorage.setString('token', pushtoken.toString());
-          Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (ctx) => HomeDosen()), (ctx) => false);
+          _showDialog(data['msg']);
+          setState(() {
+            _isLoading = false;
+          });
         }
-      } else {
-        _showDialog(data['msg']);
-        setState(() {
-          _isLoading = false;
-          
-        });
-       
-      }
-    });});
-    
+      });
+    });
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -179,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
     configLocalNotification();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
