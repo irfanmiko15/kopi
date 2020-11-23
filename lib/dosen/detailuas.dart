@@ -29,7 +29,7 @@ Future<List<ListTanggal>> _getTanggal() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -52,7 +52,7 @@ Future<List<ListTanggal>> _getPeraturan() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -75,7 +75,7 @@ Future<List<ListTanggal>> _getPengumpulan() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -98,7 +98,7 @@ Future<List<ListTanggal>> _getPendampingan() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -121,7 +121,7 @@ Future<List<ListTanggal>> _getNilai() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -144,7 +144,7 @@ Future<List<ListTanggal>> _getPerbaikanNilai() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -238,7 +238,7 @@ class _DetailUasState extends State<DetailUas> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                 "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -355,7 +355,7 @@ class _DetailUasState extends State<DetailUas> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -471,7 +471,7 @@ class _DetailUasState extends State<DetailUas> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                 "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -587,7 +587,7 @@ class _DetailUasState extends State<DetailUas> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                 "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -704,7 +704,7 @@ class _DetailUasState extends State<DetailUas> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -821,7 +821,7 @@ class _DetailUasState extends State<DetailUas> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -900,6 +900,7 @@ class ListTanggal {
   final String namamahasiswa;
   final String pertanyaan;
   final String id;
+  final String tgl;
 
-  ListTanggal(this.namadosen, this.namamahasiswa, this.pertanyaan, this.id);
+  ListTanggal(this.namadosen, this.namamahasiswa, this.pertanyaan, this.id,this.tgl);
 }
