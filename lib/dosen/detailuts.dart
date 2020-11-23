@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kopi/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +30,7 @@ Future<List<ListTanggal>> _getTanggal() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -52,7 +53,7 @@ Future<List<ListTanggal>> _getPeraturan() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -75,7 +76,7 @@ Future<List<ListTanggal>> _getPengumpulan() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -98,7 +99,7 @@ Future<List<ListTanggal>> _getPendampingan() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -121,7 +122,7 @@ Future<List<ListTanggal>> _getNilai() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -144,7 +145,7 @@ Future<List<ListTanggal>> _getPerbaikanNilai() async {
   List<ListTanggal> sliders = [];
   for (var u in jsonData['data']) {
     ListTanggal slider = ListTanggal(u["nama_dosen"], u["nama_mahasiswa"],
-        u["pertanyaan"], u["id_pertanyaan"].toString());
+        u["pertanyaan"], u["id_pertanyaan"].toString(),u["date_time"]);
     //print(u["image"]);
     sliders.add(slider);
   }
@@ -238,7 +239,7 @@ class _TanggalState extends State<Tanggal> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -355,7 +356,7 @@ class _TanggalState extends State<Tanggal> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -471,7 +472,7 @@ class _TanggalState extends State<Tanggal> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                               "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -581,13 +582,14 @@ class _TanggalState extends State<Tanggal> {
                     itemCount: snapshot.data.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext ctxt, int index) {
+                      
                       return Padding(
                         padding: EdgeInsets.only(top: 20, left: 40, right: 40),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                 "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -704,7 +706,7 @@ class _TanggalState extends State<Tanggal> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                               "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -815,13 +817,16 @@ class _TanggalState extends State<Tanggal> {
                     itemCount: snapshot.data.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext ctxt, int index) {
+                      
+                      
+                     
                       return Padding(
                         padding: EdgeInsets.only(top: 20, left: 40, right: 40),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                snapshot.data[index].namamahasiswa,
+                                "${snapshot.data[index].namamahasiswa} | ${snapshot.data[index].tgl}",
                                 style: TextStyle(
                                     fontFamily: 'Gothic',
                                     fontSize: 12,
@@ -900,6 +905,7 @@ class ListTanggal {
   final String namamahasiswa;
   final String pertanyaan;
   final String id;
+  final String tgl;
 
-  ListTanggal(this.namadosen, this.namamahasiswa, this.pertanyaan, this.id);
+  ListTanggal(this.namadosen, this.namamahasiswa, this.pertanyaan, this.id,this.tgl);
 }

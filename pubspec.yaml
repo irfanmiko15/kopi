@@ -40,10 +40,16 @@ dependencies:
   lottie: ^0.7.0+1
   dio:
   shimmer: ^1.1.1
+  indonesia: ^1.0.1
+  flutter_launcher_icons: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/image/iconapps.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
