@@ -54,14 +54,14 @@ class _JadwalScreenState extends State<JadwalScreen> {
     bool getSound = localPreference.getBool('sound');
     if (getSound == true) {
       audioCekjadwal();
-      Navigator.of(context).pop();
-      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+ 
+      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
     } else {
-      Navigator.of(context).pop();
-      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+    
+      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });

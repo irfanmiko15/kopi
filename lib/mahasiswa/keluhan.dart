@@ -80,12 +80,12 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
     if (getSound == true) {
       audioPendampingan();
       // Imagine that this function is fetching user info from another service or database.
-      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
     } else {
-      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
@@ -101,12 +101,12 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
     bool getSound = localPreference.getBool('sound');
     if (getSound == true) {
       audioKemanan();
-      Future.delayed(Duration(seconds: 3), () => _callNumberKeamanan());
+      Future.delayed(Duration(seconds: 3), () => _callNumberKeamanan()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
     } else {
-      Future.delayed(Duration(seconds: 3), () => _callNumberKeamanan());
+      Future.delayed(Duration(seconds: 3), () => _callNumberKeamanan()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
@@ -117,16 +117,20 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
     setState(() {
       _isLoading = true;
     });
-    loading();
+    
     SharedPreferences localPreference = await SharedPreferences.getInstance();
     bool getSound = localPreference.getBool('sound');
     if (getSound == true) {
-      Future.delayed(Duration(seconds: 3), () => _callNumberPsikologi());
+      
+      Future.delayed(Duration(seconds: 3), () => _callNumberPsikologi().then((value) =>  Navigator.of(context).pop()));
+      
       setState(() {
         _isLoading = false;
       });
     } else {
-      Future.delayed(Duration(seconds: 3), () => _callNumberPsikologi());
+      
+      Future.delayed(Duration(seconds: 3), () => _callNumberPsikologi().then((value) =>  Navigator.of(context).pop()));
+      
       setState(() {
         _isLoading = false;
       });
@@ -142,12 +146,13 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
     bool getSound = localPreference.getBool('sound');
     if (getSound == true) {
       audioAkademik();
-      Future.delayed(Duration(seconds: 3), () => _callNumberAkademik());
+      Future.delayed(Duration(seconds: 3), () => _callNumberAkademik()).then((value) =>  Navigator.of(context).pop());
+       
       setState(() {
         _isLoading = false;
       });
     } else {
-      Future.delayed(Duration(seconds: 3), () => _callNumberAkademik());
+      Future.delayed(Duration(seconds: 3), () => _callNumberAkademik()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
@@ -233,6 +238,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                       ),
                       onTap: () {
                         akademik();
+                        
                       },
                     ),
                     InkWell(
@@ -274,6 +280,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
+                        loading();
                         psikologi();
                       },
                     ),
