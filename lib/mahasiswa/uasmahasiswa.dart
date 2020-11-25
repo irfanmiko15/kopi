@@ -8,83 +8,172 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kopi/dosen/detailuts.dart';
 
-
 class UASMahasiswa extends StatefulWidget {
   @override
   _UASMahasiswaState createState() => _UASMahasiswaState();
 }
 
 class _UASMahasiswaState extends State<UASMahasiswa> {
-     AudioCache _audioCache;
-   void modalNilai(context) {
-    _audioCache.play('nilai.mp3');
-    setState(() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Modal('15', 'Nilai', 'Bapak/Ibu Nilai UAS Saya Berapa ya?');
-        },
-      );
-    });
+  AudioCache _audioCache;
+  void modalNilai(context) async {
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      _audioCache.play('nilai.mp3');
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('15', 'Nilai', 'Bapak/Ibu Nilai UAS Saya Berapa ya?');
+          },
+        );
+      });
+    } else {
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('15', 'Nilai', 'Bapak/Ibu Nilai UAS Saya Berapa ya?');
+          },
+        );
+      });
+    }
   }
 
-  void modalPendampingan(context) {
-    _audioCache.play('Pendamping.mp3');
-    setState(() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Modal('12', 'Pendamping', 'Bapak/Ibu apakah saya boleh menerima pendampingan selama mengerjakan UAS mata kuliah Bapak/Ibu?');
-        },
-      );
-    });
+  void modalPendampingan(context) async {
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      _audioCache.play('Pendamping.mp3');
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('12', 'Pendamping',
+                'Bapak/Ibu apakah saya boleh menerima pendampingan selama mengerjakan UAS mata kuliah Bapak/Ibu?');
+          },
+        );
+      });
+    } else {
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('12', 'Pendamping',
+                'Bapak/Ibu apakah saya boleh menerima pendampingan selama mengerjakan UAS mata kuliah Bapak/Ibu?');
+          },
+        );
+      });
+    }
   }
 
-  void modalPengumpulan(context) {
-    _audioCache.play('Pengumpulan.mp3');
-    setState(() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Modal('11', 'Pengumpulan', 'Bapak/Ibu bagaimana teknis pengumpulan UAS mata kuliah Bapak/Ibu?');
-        },
-      );
-    });
+  void modalPengumpulan(context) async {
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      _audioCache.play('Pengumpulan.mp3');
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('11', 'Pengumpulan',
+                'Bapak/Ibu bagaimana teknis pengumpulan UAS mata kuliah Bapak/Ibu?');
+          },
+        );
+      });
+    } else {
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('11', 'Pengumpulan',
+                'Bapak/Ibu bagaimana teknis pengumpulan UAS mata kuliah Bapak/Ibu?');
+          },
+        );
+      });
+    }
   }
 
-  void modalPengaturan(context) {
-    _audioCache.play('Peraturan.mp3');
-    setState(() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Modal('10', 'Peraturan', 'Bapak/Ibu bagaimana teknis pelaksanaan UAS mata kuliah Bapak/Ibu?');
-        },
-      );
-    });
+  void modalPengaturan(context) async {
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      _audioCache.play('Peratran.mp3');
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('10', 'Peraturan',
+                'Bapak/Ibu bagaimana teknis pelaksanaan UAS mata kuliah Bapak/Ibu?');
+          },
+        );
+      });
+    } else {
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('10', 'Peraturan',
+                'Bapak/Ibu bagaimana teknis pelaksanaan UAS mata kuliah Bapak/Ibu?');
+          },
+        );
+      });
+    }
   }
 
-  void modalTanggal(context) {
-    _audioCache.play('Tanggal.mp3');
-    setState(() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Modal('8', 'Tanggal', 'Bapak/Ibu kapan UAS mata kuliah Bapak/Ibu akan dilaksanakan?');
-        },
-      );
-    });
+  void modalTanggal(context) async {
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      _audioCache.play('Tanggal.mp3');
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('8', 'Tanggal',
+                'Bapak/Ibu kapan UAS mata kuliah Bapak/Ibu akan dilaksanakan?');
+          },
+        );
+      });
+    } else {
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Modal('8', 'Tanggal',
+                'Bapak/Ibu kapan UAS mata kuliah Bapak/Ibu akan dilaksanakan?');
+          },
+        );
+      });
+    }
   }
-   void modalPerbaikan(context) {
-    _audioCache.play('Perbaikan.mp3');
+
+  void modalPerbaikan(context)async {
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+        _audioCache.play('Perbaikan.mp3');
     setState(() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Modal('13', 'Tanggal', 'Bapak/Ibu apakah saya boleh melakukan perbaikan untuk nilai UAS saya?');
+          return Modal('13', 'Perbaikan Nilai',
+              'Bapak/Ibu apakah saya boleh melakukan perbaikan untuk nilai UAS saya?');
         },
       );
     });
+    }else{
+ setState(() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal('13', 'Tanggal',
+              'Bapak/Ibu apakah saya boleh melakukan perbaikan untuk nilai UAS saya?');
+        },
+      );
+    });
+    }
+  
   }
 
   @override
@@ -96,7 +185,6 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
         fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
 
-
   @override
   Widget build(BuildContext context) {
     String dosen;
@@ -106,8 +194,8 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
           title: Text('Ujian Akhir Semester',
-                  style: TextStyle(fontFamily: 'Gothic')),
-                  centerTitle: true,
+              style: TextStyle(fontFamily: 'Gothic')),
+          centerTitle: true,
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -194,7 +282,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Image.asset(
-                                 'assets/image/peraturanblue.png',
+                                'assets/image/peraturanblue.png',
                                 height: 80,
                               ),
                               SizedBox(
@@ -339,7 +427,7 @@ class _UASMahasiswaState extends State<UASMahasiswa> {
                         modalNilai(context);
                       },
                     ),
-                     InkWell(
+                    InkWell(
                       child: Container(
                         margin: EdgeInsets.all(15),
                         decoration: BoxDecoration(
@@ -521,8 +609,11 @@ class _ModalState extends State<Modal> {
     await http
         .post("http://45.13.132.46:3003/api/chat/insert",
             headers: {"Content-Type": "application/json"},
-            body: jsonEncode(
-                {'pertanyaan_id': widget.pertanyaan_id.toString(), 'mahasiswa_id': id, 'dosen_id': dosen}))
+            body: jsonEncode({
+              'pertanyaan_id': widget.pertanyaan_id.toString(),
+              'mahasiswa_id': id,
+              'dosen_id': dosen
+            }))
         .then((response) async {
       var data = jsonDecode(response.body);
       print(data.toString());

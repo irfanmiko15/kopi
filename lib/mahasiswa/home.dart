@@ -8,6 +8,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:kopi/profil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,20 +18,44 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   AudioCache _audioKomunikasi, _audioKeluhan, _audioJadwal;
 
-  void widgetKomunikasi() {
-    _audioKomunikasi.play('komunikasi.mp3');
-    Navigator.push(
-        context, MaterialPageRoute(builder: (ctx) => KomunikasiScreen()));
+  void widgetKomunikasi() async {
+    SharedPreferences localPrefeneces = await SharedPreferences.getInstance();
+    bool getSound = localPrefeneces.getBool('sound');
+
+    if (getSound == true) {
+      _audioKomunikasi.play('komunikasi.mp3');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (ctx) => KomunikasiScreen()));
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (ctx) => KomunikasiScreen()));
+    }
   }
 
-  void widgetKeluhan() {
-    _audioKeluhan.play('Keluhan.mp3');
-    Navigator.push(context, MaterialPageRoute(builder: (_) => KeluhanScreen()));
+  void widgetKeluhan() async {
+    SharedPreferences localPrefeneces = await SharedPreferences.getInstance();
+    bool getSound = localPrefeneces.getBool('sound');
+    if (getSound == true) {
+      _audioKeluhan.play('Keluhan.mp3');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => KeluhanScreen()));
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => KeluhanScreen()));
+    }
   }
 
-  void widgetJadwal() {
-    _audioJadwal.play('jadwal.mp3');
-    Navigator.push(context, MaterialPageRoute(builder: (_) => JadwalScreen()));
+  void widgetJadwal() async {
+    SharedPreferences localPrefeneces = await SharedPreferences.getInstance();
+    bool getSound = localPrefeneces.getBool('sound');
+    if (getSound == true) {
+      _audioJadwal.play('jadwal.mp3');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => JadwalScreen()));
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (ctx) => JadwalScreen()));
+    }
   }
 
   @override
@@ -48,15 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
         fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
 
-  void logout() async{
+  void logout() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.remove('role');
-        localStorage.remove('id');
-        localStorage.remove('token');
-    Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (ctx) => LoginScreen()),
-              (ctx) => false);
+    localStorage.remove('role');
+    localStorage.remove('id');
+    localStorage.remove('token');
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (ctx) => LoginScreen()), (ctx) => false);
   }
 
   @override
@@ -66,17 +89,19 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
           toolbarHeight: 60,
           backgroundColor: Color(0xFF4DA8E0),
-          leading: InkWell(child: Image.asset('assets/image/exitwhite.png'),onTap: (){
-            logout();
-            
-          },),
+          leading: InkWell(
+            child: Image.asset('assets/image/exitwhite.png'),
+            onTap: () {
+              logout();
+            },
+          ),
           actions: <Widget>[
-
             InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (ctx)=>Profil()));
-              },
-              child: Image.asset('assets/image/profil.png')),
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (ctx) => Profil()));
+                },
+                child: Image.asset('assets/image/profil.png')),
           ],
         ),
         body: SingleChildScrollView(
@@ -152,7 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Image.asset('assets/image/komunikasi.png',height: MediaQuery.of(context).size.height*0.1,),
+                                  Image.asset(
+                                    'assets/image/komunikasi.png',
+                                    height: MediaQuery.of(context).size.height *
+                                        0.1,
+                                  ),
                                   Text(
                                     "Komunikasi",
                                     style: TextStyle(
@@ -193,7 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Image.asset('assets/image/keluhan.png',height: MediaQuery.of(context).size.height*0.1,),
+                                  Image.asset(
+                                    'assets/image/keluhan.png',
+                                    height: MediaQuery.of(context).size.height *
+                                        0.1,
+                                  ),
                                   Text(
                                     "Keluhan",
                                     style: TextStyle(
@@ -235,7 +268,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Image.asset('assets/image/jadwal.png',height: MediaQuery.of(context).size.height*0.1,),
+                              Image.asset(
+                                'assets/image/jadwal.png',
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                              ),
                               Text(
                                 "Jadwal",
                                 style: TextStyle(
@@ -246,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ]),
                       ),
                       onTap: () {
-                       widgetJadwal();
+                        widgetJadwal();
                       },
                     )
                   ]),

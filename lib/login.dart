@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void configLocalNotification() async {
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings('ic_launcher');
+        new AndroidInitializationSettings('launcher_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -59,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Platform.isAndroid ? 'com.komunikasi.kopi' : 'com.komunikasi.kopi',
       'Kopi',
       'your channel description',
-      icon: 'ic_launcher',
-      largeIcon: 'ic_launcher',
+      icon: 'launcher_icon',
+      largeIcon: 'launcher_icon',
       playSound: true,
       enableVibration: true,
       importance: Importance.Max,
@@ -111,7 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loading() {
     // flutter defined function
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -165,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
             localStorage.setString('username', data['data']['username'].toString());
             localStorage.setString('token', pushtoken.toString());
             localStorage.setBool('sound', _sound);
-
             setState(() {
               _isLoading = false;
             });

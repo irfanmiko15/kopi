@@ -10,11 +10,11 @@ class KeluhanDosen extends StatefulWidget {
 
 class _KeluhanDosenState extends State<KeluhanDosen> {
   AudioCache _audioPendamping;
-  _callNumber() async {
-    _audioPendamping.play('Pendampingan.mp3');
-    // const number = '081332893935'; //set the number here
-    // bool res = await FlutterPhoneDirectCaller.callNumber(number);
-  }
+  // _callNumber() async {
+  //   _audioPendamping.play('Pendampingan.mp3');
+  //   // const number = '081332893935'; //set the number here
+  //   // bool res = await FlutterPhoneDirectCaller.callNumber(number);
+  // }
   @override
   void initState() {
     // TODO: implement initState
@@ -90,7 +90,7 @@ class _KeluhanDosenState extends State<KeluhanDosen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                        
                       },
                     ),
                     InkWell(
@@ -132,7 +132,7 @@ class _KeluhanDosenState extends State<KeluhanDosen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                        
                       },
                     ),
                     InkWell(
@@ -174,7 +174,7 @@ class _KeluhanDosenState extends State<KeluhanDosen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                        
                       },
                     ),
                     InkWell(
@@ -216,7 +216,7 @@ class _KeluhanDosenState extends State<KeluhanDosen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                        
                       },
                     ),
                     InkWell(
@@ -258,7 +258,7 @@ class _KeluhanDosenState extends State<KeluhanDosen> {
                             ]),
                       ),
                       onTap: () {
-                        _callNumber();
+                        
                       },
                     ),
                   ],

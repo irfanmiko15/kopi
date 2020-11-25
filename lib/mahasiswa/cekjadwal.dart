@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kopi/constant.dart';
 import 'package:http/http.dart' as http;
+import 'package:kopi/profil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -56,7 +57,12 @@ class _JadwalSemesterIniScreenState extends State<JadwalSemesterIniScreen> {
         title: Text("Jadwal"),
         centerTitle: true,
         actions: <Widget>[
-          InkWell(child: Image.asset('assets/image/profil.png')),
+           InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (ctx) =>Profil()));
+                },
+                child: Image.asset('assets/image/profil.png')),
         ],
       ),
       body: Container(

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kopi/constant.dart';
+import 'package:kopi/dosen/homedosen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
@@ -878,6 +879,9 @@ class _TanggalState extends State<Tanggal> {
           centerTitle: true,
           actions: <Widget>[
             InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeDosen()));
+              },
                 child: Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: Image.asset(

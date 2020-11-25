@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
 
+import 'homedosen.dart';
+
 class DetailUas extends StatefulWidget {
   final String judul;
   const DetailUas(this.judul);
@@ -872,7 +874,10 @@ class _DetailUasState extends State<DetailUas> {
                   TextStyle(fontFamily: 'Gothic', fontWeight: FontWeight.bold)),
           centerTitle: true,
           actions: <Widget>[
-            InkWell(
+             InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeDosen()));
+              },
                 child: Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: Image.asset(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KeluhanScreen extends StatefulWidget {
   @override
@@ -11,26 +12,153 @@ class KeluhanScreen extends StatefulWidget {
 }
 
 class _KeluhanScreenState extends State<KeluhanScreen> {
-  AudioCache _audioPendamping;
+  AudioCache _audio;
+  bool _isLoading;
+  loading() {
+    setState(() {
+      _isLoading = false;
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+            content: Container(
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(width: 10),
+                    Text("Loading...")
+                  ],
+                )));
+      },
+      barrierDismissible: false,
+    );
+  }
+
   _callNumberPendamping() async {
     const number = '08993950031'; //set the number here
     bool res = await FlutterPhoneDirectCaller.callNumber(number);
   }
-  audio() {
-    _audioPendamping.play('Pendamping.mp3');
+   _callNumberKeamanan() async {
+    const number = '089615224650'; //set the number here
+    bool res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+  _callNumberPsikologi() async {
+    const number = '081229010188'; //set the number here
+    bool res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+  _callNumberAkademik() async {
+    const number = '089685290801'; //set the number here
+    bool res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
-  Future<void> pendamping() {
-    audio();
-    // Imagine that this function is fetching user info from another service or database.
-    return Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+  audioPendampingan() {
+    _audio.play('Pendamping.mp3');
+  }
+
+  audioKemanan() {
+    _audio.play('Keamanan.mp3');
+  }
+
+  audioPsikologi() {
+    _audio.play('Psikolog.mp3');
+  }
+
+  audioAkademik() {
+    _audio.play('Akademik.mp3');
+  }
+
+  Future<void> pendamping() async {
+    setState(() {
+      _isLoading = true;
+    });
+    loading();
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      audioPendampingan();
+      // Imagine that this function is fetching user info from another service or database.
+      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Future.delayed(Duration(seconds: 3), () => _callNumberPendamping());
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> keamanan() async {
+    setState(() {
+      _isLoading = true;
+    });
+    loading();
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      audioKemanan();
+      Future.delayed(Duration(seconds: 3), () => _callNumberKeamanan());
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Future.delayed(Duration(seconds: 3), () => _callNumberKeamanan());
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> psikologi() async {
+    setState(() {
+      _isLoading = true;
+    });
+    loading();
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      Future.delayed(Duration(seconds: 3), () => _callNumberPsikologi());
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Future.delayed(Duration(seconds: 3), () => _callNumberPsikologi());
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> akademik() async {
+    setState(() {
+      _isLoading = true;
+    });
+    loading();
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      audioAkademik();
+      Future.delayed(Duration(seconds: 3), () => _callNumberAkademik());
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Future.delayed(Duration(seconds: 3), () => _callNumberAkademik());
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _audioPendamping = AudioCache(
+    _audio = AudioCache(
         prefix: "audio/",
         fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
@@ -104,7 +232,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                       
+                        akademik();
                       },
                     ),
                     InkWell(
@@ -146,7 +274,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                        
+                        psikologi();
                       },
                     ),
                     InkWell(
@@ -187,9 +315,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                               )
                             ]),
                       ),
-                      onTap: () async {
-                        await audio();
-                      },
+                      onTap: () async {},
                     ),
                     InkWell(
                       child: Container(
@@ -230,7 +356,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                             ]),
                       ),
                       onTap: () {
-                       
+                        keamanan();
                       },
                     ),
                     InkWell(
