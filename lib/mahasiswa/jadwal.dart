@@ -37,7 +37,7 @@ class _JadwalScreenState extends State<JadwalScreen> {
   }
 
   _callNumberPendamping() async {
-    const number = '085155439113'; //set the number here
+    const number = '08993950031'; //set the number here
     bool res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 

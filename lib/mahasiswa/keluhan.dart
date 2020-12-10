@@ -54,6 +54,11 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
     bool res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
+  _callNumberAdministrasi()async{
+    const number = '08585099913';
+    bool res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
   audioPendampingan() {
     _audio.play('Pendamping.mp3');
   }
@@ -153,6 +158,27 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
       });
     } else {
       Future.delayed(Duration(seconds: 3), () => _callNumberAkademik()).then((value) =>  Navigator.of(context).pop());
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+  Future<void> administrasi()async{
+    setState(() {
+      _isLoading = true;
+    });
+    loading();
+    SharedPreferences localPreference = await SharedPreferences.getInstance();
+    bool getSound = localPreference.getBool('sound');
+    if (getSound == true) {
+      audioAkademik();
+      Future.delayed(Duration(seconds: 3), () => _callNumberAdministrasi()).then((value) =>  Navigator.of(context).pop());
+       
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Future.delayed(Duration(seconds: 3), () => _callNumberAdministrasi()).then((value) =>  Navigator.of(context).pop());
       setState(() {
         _isLoading = false;
       });
@@ -322,7 +348,9 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
                               )
                             ]),
                       ),
-                      onTap: () async {},
+                      onTap: () async {
+                          administrasi();
+                      },
                     ),
                     InkWell(
                       child: Container(
