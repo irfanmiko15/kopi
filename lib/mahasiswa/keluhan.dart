@@ -55,7 +55,7 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
   }
 
   _callNumberAdministrasi()async{
-    const number = '08585099913';
+    const number = '085850933313';
     bool res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
@@ -152,7 +152,6 @@ class _KeluhanScreenState extends State<KeluhanScreen> {
     if (getSound == true) {
       audioAkademik();
       Future.delayed(Duration(seconds: 3), () => _callNumberAkademik()).then((value) =>  Navigator.of(context).pop());
-       
       setState(() {
         _isLoading = false;
       });
